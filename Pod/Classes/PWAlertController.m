@@ -300,7 +300,7 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
     [self dismissAlertController];
 }
 
-#pragma mark - getters
+
 - (void)dismissAlertController {
     [UIView animateWithDuration:0.25 animations:^{
         self.view.backgroundColor = [UIColor clearColor];
@@ -311,6 +311,14 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
     }];
 }
 
+- (void)showInViewController:(UIViewController *)viewController {
+    if ([viewController isKindOfClass:[UIViewController class]]) {
+        [viewController addChildViewController:self];
+        [viewController.view addSubview:self.view];
+    }
+}
+
+#pragma mark - getters
 - (PWActionSheet *)actionSheetView {
     if (!_actionSheetView) {
         _actionSheetView = [[PWActionSheet alloc] init];
