@@ -1,0 +1,6 @@
+framework module PWAlertController {
+  umbrella header "PWAlertController-umbrella.h"
+
+  export *
+  module * { export * }
+}

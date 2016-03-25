@@ -1,0 +1,14 @@
+PODS:
+  - PWAlertController (0.1.0)
+
+DEPENDENCIES:
+  - PWAlertController (from `../`)
+
+EXTERNAL SOURCES:
+  PWAlertController:
+    :path: ../
+
+SPEC CHECKSUMS:
+  PWAlertController: 3fd3cbf945e6b616032a1cb88156297d067107fc
+
+COCOAPODS: 0.39.0
