@@ -19,14 +19,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    UIImageView *imageview = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    imageview.image = [UIImage imageNamed:@"q"];
+    imageview.contentMode = UIViewContentModeScaleAspectFill;
+    [self.view addSubview:imageview];
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.backgroundColor = [UIColor redColor];
     btn.frame = CGRectMake(100, 100, 200, 50);
     [self.view addSubview:btn];
     [btn addTarget:self action:@selector(actionSheet:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.view.backgroundColor = [UIColor lightGrayColor];
-    
+        
 }
 
 - (void)actionSheet:(id)sender {

@@ -34,17 +34,26 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        [self.contentView addSubview:self.contentLabel];
+        
         self.selectionStyle = UITableViewCellSelectionStyleGray;
-        self.contentView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.96f];
+        
+        UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
+        
+        UIVisualEffectView *effectview = [[UIVisualEffectView alloc] initWithEffect:blur];
+        
+        effectview.frame = self.bounds;
+        
+        [self.contentView addSubview:effectview];
+        [self.contentView addSubview:self.contentLabel];
+        self.contentView.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
 
-//- (void)prepareForReuse {
-//    [super prepareForReuse];
-//    self.contentLabel.textColor = [UIColor blackColor];
-//}
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.contentLabel.textColor = [UIColor blackColor];
+}
 
 - (void)setText:(NSString *)text withStyle:(PWActionSheetCellStyle)style {
     self.contentLabel.text = text;
@@ -64,7 +73,7 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
         _contentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _contentLabel.numberOfLines = 0;
         _contentLabel.font = [UIFont systemFontOfSize:18];
-        _contentLabel.textColor = [UIColor colorWithRed:0.39 green:0.39 blue:0.39 alpha:1.00];
+        _contentLabel.textColor = [UIColor blackColor];
     }
     return _contentLabel;
 }
@@ -77,9 +86,8 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 @property (nonatomic, strong) UITableView   *actionSheetTableView;
 @property (nonatomic, copy) NSString        *title;
 @property (nonatomic, strong) NSString      *cancelTitle;
+@property (nonatomic, assign) BOOL          hasDestruButton;
 @property (nonatomic, copy) PWActionSheetEventBlock clickedEventBlock;
-
-- (void)showInView:(UIView *)view;
 
 @end
 
@@ -90,8 +98,16 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
     self = [super init];
     if (self) {
         
-        self.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.3];
+        UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        
+        UIVisualEffectView *effectview = [[UIVisualEffectView alloc] initWithEffect:blur];
+        
+        effectview.frame = self.bounds;
+        
+        self.backgroundColor = [UIColor clearColor];
+        [self addSubview:effectview];
         [self addSubview:self.actionSheetTableView];
+        
     }
     return self;
 }
@@ -109,8 +125,12 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
                          
                      }];
 }
-
-- (void)reloadData {
+/**
+ *  @author Paul Wang, 16-03-26 00:03:41
+ *
+ *  @brief
+ */
+- (void)reloadUI {
     [self.actionSheetTableView reloadData];
     
     self.frame = CGRectMake(0, 0, self.actionSheetTableView.contentSize.width, self.actionSheetTableView.contentSize.height);
@@ -132,7 +152,6 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
         [_actionSheetTableView registerClass:[PWActionSheetTableViewCell class] forCellReuseIdentifier:ideActionSheetTableViewCell];
         _actionSheetTableView.backgroundColor = [UIColor clearColor];
         _actionSheetTableView.scrollEnabled = NO;
-        _actionSheetTableView.backgroundColor = [UIColor clearColor];
         _actionSheetTableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.3];
 
     }
@@ -155,7 +174,13 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PWActionSheetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ideActionSheetTableViewCell forIndexPath:indexPath];
-    [cell setText:[self.textArray objectAtIndex:indexPath.row] withStyle:PWActionSheetCellStyleNormal];
+    if (indexPath.section == 0) {
+        if (self.hasDestruButton && indexPath.row == self.textArray.count - 1) {
+            [cell setText:[self.textArray objectAtIndex:indexPath.row] withStyle:PWActionSheetCellStyleDestructive];
+        }else{
+            [cell setText:[self.textArray objectAtIndex:indexPath.row] withStyle:PWActionSheetCellStyleNormal];
+        }
+    }
     if (indexPath.section == 1) {
         [cell setText:self.cancelTitle withStyle:PWActionSheetCellStyleNormal];
     }
@@ -194,7 +219,7 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44;
+    return 50;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -225,9 +250,22 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 
 @end
 
+@interface PWAlertView : UIView <UIAlertViewDelegate>
+
+@end
+
+@implementation PWAlertView
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+
+}
+
+@end
+
 @interface PWAlertController ()
 
-@property (nonatomic, strong) PWActionSheet    *actionSheetView;
+@property (nonatomic, strong) PWActionSheet *actionSheetView;
+@property (nonatomic, strong) PWAlertView   *alertView;
 
 @end
 
@@ -254,7 +292,6 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
 }
 
 - (void)viewDidLoad {
@@ -262,11 +299,17 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
     [self.view addSubview:self.actionSheetView];
 }
 
+
+//+ (instancetype)initWithTitle:(nullable NSString *)title message:(nullable NSString *)message cancelButtonTitle:(nullable NSString *)cancelButtonTitle otherButtonTitles:(nullable NSString *)otherButtonTitles, ... {
+//    PWAlertController *alert = [PWAlertController shareAlert];
+//    AL
+//}
+
 + (instancetype)sheetWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle buttonClicked:(PWActionSheetEventBlock)buttonClicked otherButtonTitles:(NSString *)otherButtonTitles, ... {
     
     PWAlertController *alert = [PWAlertController shareAlert];
     alert.actionSheetView.clickedEventBlock = [buttonClicked copy];
-    
+    alert.actionSheetView.hasDestruButton = NO;
     alert.actionSheetView.title = title;
     alert.actionSheetView.textArray = nil;
     NSMutableArray *tmpArr = [NSMutableArray array];
@@ -284,8 +327,12 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
     if (cancelButtonTitle) {
         alert.actionSheetView.cancelTitle = cancelButtonTitle;
     }
+    if (destructiveButtonTitle) {
+        [tmpArr addObject:destructiveButtonTitle];
+        alert.actionSheetView.hasDestruButton = YES;
+    }
     alert.actionSheetView.textArray = tmpArr;
-    [alert.actionSheetView reloadData];
+    [alert.actionSheetView reloadUI];
     
     [alert.actionSheetView showInView:alert.view];
     return alert;
@@ -312,10 +359,10 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 }
 
 - (void)showInViewController:(UIViewController *)viewController {
-    if ([viewController isKindOfClass:[UIViewController class]]) {
-        [viewController addChildViewController:self];
-        [viewController.view addSubview:self.view];
-    }
+    UIWindow *keywindow = [UIApplication sharedApplication].keyWindow;
+    [keywindow.rootViewController addChildViewController:self];
+    [keywindow.rootViewController.view addSubview:self.view];
+    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
 }
 
 #pragma mark - getters
@@ -324,6 +371,13 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
         _actionSheetView = [[PWActionSheet alloc] init];
     }
     return _actionSheetView;
+}
+
+- (PWAlertView *)alertView {
+    if (!_alertView) {
+        _alertView = [[PWAlertView alloc] init];
+    }
+    return _alertView;
 }
 
 @end
