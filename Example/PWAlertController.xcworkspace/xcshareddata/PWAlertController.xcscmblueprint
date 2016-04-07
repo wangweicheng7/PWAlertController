@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "328372B8C1C70BA1F71E2E5187BAFB222EAC842E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "328372B8C1C70BA1F71E2E5187BAFB222EAC842E" : 0,
+    "35437E58CEA477B442667A45CA0DAAF68B67C7AD" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "44A3D42D-2692-4BDE-B20E-A2C5B94AFB0F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "328372B8C1C70BA1F71E2E5187BAFB222EAC842E" : "PWAlertController\/",
+    "35437E58CEA477B442667A45CA0DAAF68B67C7AD" : "PWAlertController\/PWAlertController.podspec\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "PWAlertController",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Example\/PWAlertController.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/wangweicheng7\/PWAlertController.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "328372B8C1C70BA1F71E2E5187BAFB222EAC842E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/CocoaPods\/pod-template.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "35437E58CEA477B442667A45CA0DAAF68B67C7AD"
+    }
+  ]
+}

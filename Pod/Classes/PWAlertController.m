@@ -22,7 +22,9 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
  *
  *  @brief action sheet 上的每个点击区块 cell
  */
-@interface PWActionSheetTableViewCell : UITableViewCell
+@interface PWActionSheetTableViewCell : UITableViewCell {
+    UIVisualEffectView  *_effectView;
+}
 
 @property (nonatomic, strong) UILabel   *contentLabel;
 
@@ -39,13 +41,13 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
         
         UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
         
-        UIVisualEffectView *effectview = [[UIVisualEffectView alloc] initWithEffect:blur];
+        _effectView = [[UIVisualEffectView alloc] initWithEffect:blur];
         
-        effectview.frame = self.bounds;
+        _effectView.frame = self.bounds;
         
-        [self.contentView addSubview:effectview];
+        self.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
+        [self.contentView addSubview:_effectView];
         [self.contentView addSubview:self.contentLabel];
-        self.contentView.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
@@ -66,6 +68,7 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
     [super layoutSubviews];
     [self.contentLabel sizeToFit];
     self.contentLabel.center = CGPointMake([UIScreen mainScreen].bounds.size.width / 2.0f, self.frame.size.height / 2.0f);
+    _effectView.frame = self.bounds;
 }
 
 - (UILabel *)contentLabel {
@@ -152,7 +155,6 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
         [_actionSheetTableView registerClass:[PWActionSheetTableViewCell class] forCellReuseIdentifier:ideActionSheetTableViewCell];
         _actionSheetTableView.backgroundColor = [UIColor clearColor];
         _actionSheetTableView.scrollEnabled = NO;
-        _actionSheetTableView.separatorColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.3];
 
     }
     return _actionSheetTableView;

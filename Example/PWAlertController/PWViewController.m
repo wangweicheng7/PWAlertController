@@ -26,7 +26,7 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.backgroundColor = [UIColor redColor];
-    btn.frame = CGRectMake(100, 100, 200, 50);
+    btn.frame = CGRectMake(100, 300, 200, 50);
     [self.view addSubview:btn];
     [btn addTarget:self action:@selector(actionSheet:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -35,7 +35,7 @@
 - (void)actionSheet:(id)sender {
     PWAlertController *alert = [PWAlertController sheetWithTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除" buttonClicked:^(NSUInteger index) {
         NSLog(@"alert selected at index:%ld", index);
-    } otherButtonTitles:@"标题一",@"标题二",@"标题三",nil];
+    } otherButtonTitles:@"标题一",@"标题二",@"标题三",@"标题三",@"标题三",@"标题三",@"标题三",@"标题三",nil];
     [alert showInViewController:self];
 }
 
