@@ -13,7 +13,7 @@ typedef void(^PWActionSheetEventBlock)(NSUInteger index);
 @interface PWAlertController : UIViewController
 
 /**
- *  @author Paul Wang, 16-03-26 00:03:46
+ *  @author Paul Wang, 16-03-26 00:03:45
  *
  *  @brief 单例弹框
  *

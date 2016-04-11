@@ -315,12 +315,6 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
     [self.view addSubview:self.actionSheetView];
 }
 
-
-//+ (instancetype)initWithTitle:(nullable NSString *)title message:(nullable NSString *)message cancelButtonTitle:(nullable NSString *)cancelButtonTitle otherButtonTitles:(nullable NSString *)otherButtonTitles, ... {
-//    PWAlertController *alert = [PWAlertController shareAlert];
-//    AL
-//}
-
 + (instancetype)sheetWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle destructiveButtonTitle:(NSString *)destructiveButtonTitle buttonClicked:(PWActionSheetEventBlock)buttonClicked otherButtonTitles:(NSString *)otherButtonTitles, ... {
     
     PWAlertController *alert = [PWAlertController shareAlert];
