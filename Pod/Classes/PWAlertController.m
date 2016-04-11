@@ -366,6 +366,10 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
     }];
 }
 
+- (void)showInViewController:(UIViewController *)viewController {
+
+}
+
 #pragma mark - getters
 - (PWActionSheet *)actionSheetView {
     if (!_actionSheetView) {
