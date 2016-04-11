@@ -41,5 +41,4 @@ typedef void(^PWActionSheetEventBlock)(NSInteger index);
  */
 - (void)dismissAlertController;
 
-- (void)showInViewController:(UIViewController *)viewController;
 @end
