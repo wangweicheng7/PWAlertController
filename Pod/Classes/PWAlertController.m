@@ -117,10 +117,10 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 
 - (void)showInView:(UIView *)view {
     self.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, self.frame.size.height);
-    [UIView animateWithDuration:0.5
-                          delay:0
-         usingSpringWithDamping:0.6
-          initialSpringVelocity:0.6
+    [UIView animateWithDuration:0.5f
+                          delay:0.0f
+         usingSpringWithDamping:0.6f
+          initialSpringVelocity:0.6f
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
                          self.frame = CGRectMake(0, SCREEN_HEIGHT - self.frame.size.height, SCREEN_WIDTH, self.frame.size.height);
@@ -136,7 +136,7 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 - (void)reloadUI {
     [self.actionSheetTableView reloadData];
     
-    self.frame = CGRectMake(0, 0, self.actionSheetTableView.contentSize.width, self.actionSheetTableView.contentSize.height);
+    self.frame = CGRectMake(0, SCREEN_HEIGHT, self.actionSheetTableView.contentSize.width, self.actionSheetTableView.contentSize.height);
     self.actionSheetTableView.frame = CGRectMake(0, 0, self.actionSheetTableView.contentSize.width, self.actionSheetTableView.contentSize.height);
 
 }
@@ -279,7 +279,16 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
     dispatch_once(&once, ^{
         alert = [[PWAlertController alloc] init];
         alert.automaticallyAdjustsScrollViewInsets = NO;
-
+        if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
+            
+            alert.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+            
+        }else{
+            
+            alert.modalPresentationStyle = UIModalPresentationCurrentContext;
+            
+        }
+        alert.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     });
     return alert;
 }
@@ -294,6 +303,11 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [UIView animateWithDuration:0.25 animations:^{
+        [[PWAlertController shareAlert].actionSheetView showInView:[PWAlertController shareAlert].view];
+        self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
+    }];
+    
 }
 
 - (void)viewDidLoad {
@@ -336,7 +350,7 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
     alert.actionSheetView.textArray = tmpArr;
     [alert.actionSheetView reloadUI];
     
-    [alert.actionSheetView showInView:alert.view];
+    
     return alert;
 }
 
@@ -351,20 +365,16 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 
 
 - (void)dismissAlertController {
-    [UIView animateWithDuration:0.25 animations:^{
+    
+    [UIView animateWithDuration:0.20 animations:^{
         self.view.backgroundColor = [UIColor clearColor];
         self.actionSheetView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 0);
     } completion:^(BOOL finished) {
-        [self.view removeFromSuperview];
-        [self removeFromParentViewController];
+        
     }];
-}
-
-- (void)showInViewController:(UIViewController *)viewController {
-    UIWindow *keywindow = [UIApplication sharedApplication].keyWindow;
-    [keywindow.rootViewController addChildViewController:self];
-    [keywindow.rootViewController.view addSubview:self.view];
-    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 #pragma mark - getters
