@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^PWActionSheetEventBlock)(NSUInteger index);
+typedef void(^PWActionSheetEventBlock)(NSInteger index);
 
 @interface PWAlertController : UIViewController
 

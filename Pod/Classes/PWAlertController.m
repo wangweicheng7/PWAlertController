@@ -141,11 +141,6 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-}
-
 #pragma mark - getters 
 - (UITableView *)actionSheetTableView {
     if (!_actionSheetTableView) {
