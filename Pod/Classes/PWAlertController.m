@@ -230,7 +230,7 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (self.title && section == 0) {
-        return 30;
+        return 50;
     }
     if (section == 1) {
         return 6;
