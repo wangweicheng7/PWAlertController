@@ -36,6 +36,7 @@
     PWAlertController *alert = [PWAlertController sheetWithTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除" buttonClicked:^(NSUInteger index) {
         NSLog(@"alert selected at index:%ld", index);
     } otherButtonTitles:@"标题一",@"标题二",@"标题三",nil];
+    self.modalPresentationStyle = UIModalPresentationCurrentContext;
     [self presentViewController:alert animated:YES completion:^{
         
     }];

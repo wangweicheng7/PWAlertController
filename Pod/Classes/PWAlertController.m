@@ -185,14 +185,19 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.clickedEventBlock ) {
-        if (indexPath.section == 0) {
-            self.clickedEventBlock(indexPath.row);
-        }else if (indexPath.section == 1) {
-            self.clickedEventBlock(self.textArray.count);
-        }
-        [[PWAlertController shareAlert] dismissAlertController];
+    __weak typeof(self) weakSelf = self;
+    NSInteger index = 0;
+    if (indexPath.section == 0) {
+        index = indexPath.row;
+    }else if (indexPath.section == 1) {
+        index = self.textArray.count;
     }
+    
+    [[PWAlertController shareAlert] dismissAlertController:^{
+        if (weakSelf.clickedEventBlock ) {
+            weakSelf.clickedEventBlock(index);
+        }
+    }];
 }
 /**
  *  @author Paul Wang, 16-03-25 17:03:43
@@ -349,23 +354,19 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
-    [self dismissAlertController];
+    [self dismissAlertController:nil];
 }
 
 
-- (void)dismissAlertController {
-    
+- (void)dismissAlertController:( void (^ __nullable)(void) )completion {
     [UIView animateWithDuration:0.20 animations:^{
         self.view.backgroundColor = [UIColor clearColor];
         self.actionSheetView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 0);
     } completion:^(BOOL finished) {
         
     }];
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    [self dismissViewControllerAnimated:YES completion:completion];
 }
-
 #pragma mark - getters
 - (PWActionSheet *)actionSheetView {
     if (!_actionSheetView) {

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^PWActionSheetEventBlock)(NSInteger index);
+typedef void(^PWActionSheetEventBlock)(NSUInteger index);
 
 @interface PWAlertController : UIViewController
 
@@ -39,7 +39,7 @@ typedef void(^PWActionSheetEventBlock)(NSInteger index);
  *
  *  @brief dis miss 弹框
  */
-- (void)dismissAlertController;
+- (void)dismissAlertController:( void (^ __nullable)(void) )completion;
 
 
 @end

@@ -9,12 +9,19 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 easy to use
+
 ``` Objective-C
 PWAlertController *alert = [PWAlertController sheetWithTitle:nil cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除" buttonClicked:^(NSUInteger index) {
     NSLog(@"alert selected at index:%ld", index);
 } otherButtonTitles:@"标题一",@"标题二",@"标题三",nil];
-[alert showInViewController:self];
+[self presentViewController:alert animated:YES completion:^{
+
+}];
+
 ```
+
+> iOS 7 下， `[self presentViewController:alert animation:YES completion:nil];` 前面要写一句  `self.modalPresentationStyle = UIModalPresentationCurrentContext;` 
+
 
 
 ## Requirements
