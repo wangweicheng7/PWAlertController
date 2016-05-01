@@ -358,7 +358,7 @@ static  NSString    *ideActionSheetTableViewCell = @"PWActionSheetTableViewCellI
 }
 
 
-- (void)dismissAlertController:( void (^ __nullable)(void) )completion {
+- (void)dismissAlertController:( void (^)(void) )completion {
     [UIView animateWithDuration:0.20 animations:^{
         self.view.backgroundColor = [UIColor clearColor];
         self.actionSheetView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 0);

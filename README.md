@@ -1,5 +1,7 @@
 # PWAlertController
 
+![logo](https://github.com/wangweicheng7/blog/blob/gh-pages/images/logo.png)
+
 [![CI Status](http://img.shields.io/travis/陌上一梦觅琴音/PWAlertController.svg?style=flat)](https://travis-ci.org/陌上一梦觅琴音/PWAlertController)
 [![Version](https://img.shields.io/cocoapods/v/PWAlertController.svg?style=flat)](http://cocoapods.org/pods/PWAlertController)
 [![License](https://img.shields.io/cocoapods/l/PWAlertController.svg?style=flat)](http://cocoapods.org/pods/PWAlertController)
